@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: "postgres"
+    environment:
+      - POSTGRES_DB=vapor_database
+      - POSTGRES_USER=vapor_username
+      - POSTGRES_PASSWORD=vapor_password
+  mysql:
+    image: "mysql"
+    environment:
+      - MYSQL_USER=vapor_username
+      - MYSQL_PASSWORD=vapor_password
+      - MYSQL_DATABASE=vapor_database
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+  redis:
+    image: "redis"
+  sticker-star-users:
+    depends_on:
+      - postgres
+      - redis
+    build:
+      context: ./StickerStarUsers
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_HOST=postgres
+      - REDIS_HOSTNAME=redis
+      - PORT=8081
+      - ENVIRONMENT=production
+  sticker-star-stickers:
+    depends_on:
+      - mysql
+      - sticker-star-users
+    build:
+      context: ./StickerStarStickers
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_HOST=mysql
+      - PORT=8082
+      - ENVIRONMENT=production
+      - AUTH_HOSTNAME=sticker-star-users
+  sticker-star-api:
+    depends_on:
+      - sticker-star-users
+      - sticker-star-stickers
+    ports:
+      - "8080:8080"
+    build:
+      context: ./StickerStarAPI
+      dockerfile: Dockerfile
+    environment:
+      - USERS_HOSTNAME=sticker-star-users
+      - STICKERS_HOSTNAME=sticker-star-stickers
+      - PORT=8080
+      - ENVIRONMENT=production
