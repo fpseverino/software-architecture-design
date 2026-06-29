@@ -1,20 +1,19 @@
 import Vapor
 
 func routes(_ app: Application) throws {
-    let usersHostname: String
-    let stickersHostname: String
+    let usersHostname =
+        if let users = Environment.get("USERS_HOSTNAME") {
+            users
+        } else {
+            "localhost"
+        }
 
-    if let users = Environment.get("USERS_HOSTNAME") {
-        usersHostname = users
-    } else {
-        usersHostname = "localhost"
-    }
-
-    if let stickers = Environment.get("STICKERS_HOSTNAME") {
-        stickersHostname = stickers
-    } else {
-        stickersHostname = "localhost"
-    }
+    let stickersHostname =
+        if let stickers = Environment.get("STICKERS_HOSTNAME") {
+            stickers
+        } else {
+            "localhost"
+        }
 
     try app.register(collection: UserController(
         userServiceHostname: usersHostname,

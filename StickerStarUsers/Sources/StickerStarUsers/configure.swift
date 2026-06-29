@@ -6,12 +6,12 @@ import Redis
 
 /// configures your application
 func configure(_ app: Application) async throws {
-    let port: Int
-    if let environmentPort = Environment.get("PORT") {
-        port = Int(environmentPort) ?? 8081
-    } else {
-        port = 8081
-    }
+    let port =
+        if let environmentPort = Environment.get("PORT") {
+            Int(environmentPort) ?? 8081
+        } else {
+            8081
+        }
     app.http.server.configuration.port = port
 
     app.databases.use(DatabaseConfigurationFactory.postgres(configuration: .init(
@@ -25,12 +25,12 @@ func configure(_ app: Application) async throws {
 
     app.migrations.add(CreateUser())
 
-    let redisHostname: String
-    if let redisEnvironmentHostname = Environment.get("REDIS_HOSTNAME") {
-        redisHostname = redisEnvironmentHostname
-    } else {
-        redisHostname = "localhost"
-    }
+    let redisHostname =
+        if let redisEnvironmentHostname = Environment.get("REDIS_HOSTNAME") {
+            redisEnvironmentHostname
+        } else {
+            "localhost"
+        }
     app.redis.configuration = try RedisConfiguration(hostname: redisHostname)
 
     // register routes

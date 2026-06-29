@@ -5,12 +5,12 @@ import Vapor
 
 /// configures your application
 func configure(_ app: Application) async throws {
-    let port: Int
-    if let environmentPort = Environment.get("PORT") {
-        port = Int(environmentPort) ?? 8082
-    } else {
-        port = 8082
-    }
+    let port =
+        if let environmentPort = Environment.get("PORT") {
+            Int(environmentPort) ?? 8082
+        } else {
+            8082
+        }
     app.http.server.configuration.port = port
 
     app.databases.use(DatabaseConfigurationFactory.mysql(

@@ -17,6 +17,7 @@ struct StickerController: RouteCollection {
         stickersGroup.put(":stickerID", use: self.update)
         stickersGroup.delete(":stickerID", use: self.delete)
         stickersGroup.get(":stickerID", "user", use: self.getUser)
+        stickersGroup.post("trade", use: self.trade)
     }
 
     @Sendable
@@ -71,8 +72,24 @@ struct StickerController: RouteCollection {
         let sticker = try response.content.decode(Sticker.self)
         return try await req.client.get("\(userServiceURL)/users/\(sticker.userID)")
     }
+
+    @Sendable
+    func trade(req: Request) async throws -> ClientResponse {
+        return try await req.client.post("\(stickersServiceURL)/trade") { tradeRequest in
+            guard let authHeader = req.headers[.authorization].first else {
+                throw Abort(.unauthorized)
+            }
+            tradeRequest.headers.add(name: .authorization, value: authHeader)
+            try tradeRequest.content.encode(req.content.decode(TradeData.self))
+        }
+    }
 }
 
 struct CreateStickerData: Content {
     let name: String
+}
+
+struct TradeData: Content {
+    let offeredStickerID: UUID
+    let requestedStickerID: UUID
 }
