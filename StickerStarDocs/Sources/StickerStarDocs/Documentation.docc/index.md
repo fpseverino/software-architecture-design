@@ -77,7 +77,7 @@ Non-functional requirements:
 ### Package Diagram
 
 ```text
-StickerStarDocs
+├─ docker-compose.yml
 ├─ StickerStarAPI
 │  ├─ Controllers
 │  ├─ DTOs
