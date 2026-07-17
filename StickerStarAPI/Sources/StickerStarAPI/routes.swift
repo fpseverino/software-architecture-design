@@ -1,5 +1,10 @@
 import Vapor
 
+/// Registers the routes of the API Gateway application,
+/// including the ``UserController`` and ``StickerController`` routes
+/// with the appropriate service hostnames for the Users and Stickers microservices.
+///
+/// - Parameter app: The application to register routes on.
 func routes(_ app: Application) throws {
     let usersHostname =
         if let users = Environment.get("USERS_HOSTNAME") {

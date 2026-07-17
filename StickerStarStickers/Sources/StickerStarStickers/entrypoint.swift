@@ -3,8 +3,10 @@ import Logging
 import NIOCore
 import NIOPosix
 
+/// The main entry point type for the application. Contains the ``Entrypoint/main()`` method that is called when the application is started.
 @main
 enum Entrypoint {
+    /// The main entry point function for the application.
     static func main() async throws {
         var env = try Environment.detect()
         try LoggingSystem.bootstrap(from: &env)

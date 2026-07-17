@@ -4,7 +4,8 @@ import FluentPostgresDriver
 import Vapor
 import Redis
 
-/// configures your application
+/// Configures the application with the specified port for the Users microservice, the database configuration, and the Redis configuration.
+/// It also registers the application's routes with the ``routes(_:)`` function and performs any necessary database migrations.
 func configure(_ app: Application) async throws {
     let port =
         if let environmentPort = Environment.get("PORT") {

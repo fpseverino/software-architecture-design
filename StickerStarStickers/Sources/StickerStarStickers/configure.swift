@@ -3,7 +3,8 @@ import Fluent
 import FluentMySQLDriver
 import Vapor
 
-/// configures your application
+/// Configures the application with the specified port for the Stickers microservice and the database configuration.
+/// It also registers the application's routes with the ``routes(_:)`` function and performs any necessary database migrations.
 func configure(_ app: Application) async throws {
     let port =
         if let environmentPort = Environment.get("PORT") {
