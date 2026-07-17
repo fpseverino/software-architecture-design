@@ -7,7 +7,7 @@ let package = Package(
         .macOS(.v13)
     ],
     dependencies: [
-        .package(url: "https://github.com/brokenhandsio/kiln.git", from: "1.8.4"),
+        .package(url: "https://github.com/brokenhandsio/kiln.git", from: "1.8.5"),
         // 📖 Produce Swift-DocC documentation for Swift Package libraries and executables.
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],

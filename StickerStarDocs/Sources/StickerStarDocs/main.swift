@@ -3,10 +3,13 @@ import Kiln
 /// The main entry point for the StickerStar documentation site.
 let site = KilnSite(
     name: "StickerStar",
-    url: "https://example.com",
+    url: "https://fpseverino.github.io",
     author: "Francesco Paolo Severino",
-    description: "Documentation for the StickerStar microservice-based application.",
-    theme: .default(palette: .autoLightDark(primary: .black, accent: .blue)),
+    description: "Documentation for the StickerStar microservice-based application, a project for the Software Architecture Design course at the University of Naples Federico II.",
+    repository: .init(
+        name: "SAD GitHub",
+        url: "https://github.com/fpseverino/software-architecture-design"
+    ),
     docc: DocCSite(
         packages: [
             APIPackage(
